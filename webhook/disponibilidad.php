@@ -61,7 +61,6 @@ if (intent_recibido('conectar') || intent_recibido('conectar2')) {
 
       $query = "SELECT * FROM usuarios WHERE online=true";
       $consulta = mysqli_query($mysqli, $query) or die(mysqli_error($mysqli));
-      $registro = mysqli_fetch_array($consulta);
       $existe = false;
       $mensaje = "Los siguientes asesores se encuentran en linea: \n";
       while ($registro = mysqli_fetch_array($consulta)) {
