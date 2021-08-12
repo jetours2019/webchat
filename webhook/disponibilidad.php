@@ -64,6 +64,7 @@ if (intent_recibido('conectar') || intent_recibido('conectar2')) {
       $existe = false;
       $mensaje = "Los siguientes asesores se encuentran en linea: \n";
       while ($registro = mysqli_fetch_array($consulta)) {
+            $existe = true;
             $fullname = $registro['fullname'];
             $clients = $registro['clients'];
             $mensaje .= "$fullname ($clients)\n";
