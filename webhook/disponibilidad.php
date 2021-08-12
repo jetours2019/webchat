@@ -59,7 +59,7 @@ if (intent_recibido('conectar') || intent_recibido('conectar2')) {
             die();
       }
 
-      $query = "SELECT * FROM usuarios WHERE online=true";
+      $query = "SELECT * FROM usuarios WHERE online=true AND username != 'admin'";
       $consulta = mysqli_query($mysqli, $query) or die(mysqli_error($mysqli));
       $existe = false;
       // $mensaje = "Los siguientes asesores se encuentran en linea: \n";
