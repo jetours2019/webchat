@@ -48,7 +48,7 @@ if (intent_recibido("disponibilidad")) {
             $mensaje = "No se encuentran registros";
       }
 
-      enviar_texto("Sillas disponibles en el mes($mes) año($amo)\n para $origen > $destino son:\n ____________________________________\n $mensaje  ____________________________________\n Para otra consulta o chatear con un asesor escribe MENU \n ____________________________________");
+      enviar_texto("Sillas disponibles en el mes($mes) año($ano)\n para $origen > $destino son:\n ____________________________________\n $mensaje  ____________________________________\n Para otra consulta o chatear con un asesor escribe MENU \n ____________________________________");
 }
 
 
