@@ -3,18 +3,15 @@
 include_once "somosioticos_dialogflow.php";
 //credenciales('empanadasbot','123456789');
 
-// me conecto a db
-$mysqli = mysqli_connect("localhost", "jetours1_disponibilidad", "(!mEkkfrKuS9", "jetours1_bloqueos");
-
-if (!$mysqli) {
-      echo "Error: No se pudo conectar a MySQL." . PHP_EOL;
-      die();
-}
-
-
 
 if (intent_recibido("disponibilidad")) {
+      // me conecto a db
+      $mysqli = mysqli_connect("localhost", "jetours1_disponibilidad", "(!mEkkfrKuS9", "jetours1_bloqueos");
 
+      if (!$mysqli) {
+            echo "Error: No se pudo conectar a MySQL." . PHP_EOL;
+            die();
+      }
       $origen = obtener_variables()['origen'];
       $destino = obtener_variables()['destino'];
       $fecha = obtener_variables()['mes'];
@@ -26,7 +23,6 @@ if (intent_recibido("disponibilidad")) {
       $ciudad2 = asignarNombreCiudad($destino);
 
 
-      global $mysqli;
       $consulta = mysqli_query($mysqli, "select * from productos  where desde1 = '$ciudad1' AND hasta1 = '$ciudad2' AND mes='$mes' AND ano='$ano'  ORDER BY dia ASC") or die(mysqli_error($mysqli));
       $registro = mysqli_fetch_array($consulta);
       $existe = false;
@@ -52,6 +48,34 @@ if (intent_recibido("disponibilidad")) {
       enviar_texto("Sillas disponibles en el mes($mes_nombre) año($ano)\n para $origen > $destino son:\n ____________________________________\n $mensaje  ____________________________________\n Para otra consulta o chatear con un asesor escribe MENU \n ____________________________________");
 }
 
+
+if (intent_recibido('conectar') || intent_recibido('conectar2')) {
+
+      // me conecto a db
+      $mysqli = mysqli_connect("localhost", "jetours1_disponibilidad", "(!mEkkfrKuS9", "jetours1_webchat");
+
+      if (!$mysqli) {
+            echo "Error: No se pudo conectar a MySQL." . PHP_EOL;
+            die();
+      }
+
+      $query = "SELECT * FROM usuarios WHERE online=true";
+      $consulta = mysqli_query($mysqli, $query) or die(mysqli_error($mysqli));
+      $registro = mysqli_fetch_array($consulta);
+      $existe = false;
+      $mensaje = "Los siguientes asesores se encuentran en linea: \n";
+      while ($registro = mysqli_fetch_array($consulta)) {
+            $fullname = $registro['fullname'];
+            $clients = $registro['clients'];
+            $mensaje .= "$fullname ($clients)\n";
+      }
+
+      if (!$existe) {
+            $mensaje = "No se encuentran asesores en linea";
+      }
+      enviar_texto($mensaje);
+
+}
 
 
 //***************************
