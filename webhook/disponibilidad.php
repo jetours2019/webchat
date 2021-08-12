@@ -62,18 +62,28 @@ if (intent_recibido('conectar') || intent_recibido('conectar2')) {
       $query = "SELECT * FROM usuarios WHERE online=true";
       $consulta = mysqli_query($mysqli, $query) or die(mysqli_error($mysqli));
       $existe = false;
-      $mensaje = "Los siguientes asesores se encuentran en linea: \n";
+      // $mensaje = "Los siguientes asesores se encuentran en linea: \n";
+      $tarjetas = array();
       while ($registro = mysqli_fetch_array($consulta)) {
             $existe = true;
             $fullname = $registro['fullname'];
             $clients = $registro['clients'];
-            $mensaje .= "$fullname ($clients)\n";
+            $s = ($clients == 1) ? "" : "s";
+            $tarjeta = array(
+                  "titulo" => $fullname,
+                  "subtitulo" => "Atendiendo $clients cliente$s.",
+                  "url" => "",
+            );
+            // $mensaje .= "$fullname ($clients)\n";
       }
 
       if (!$existe) {
             $mensaje = "No se encuentran asesores en linea";
+            enviar_texto($mensaje);
+      }else{
+            enviar_tarjetas($tarjetas, "facebook");
       }
-      enviar_texto($mensaje);
+
 
 }
 
