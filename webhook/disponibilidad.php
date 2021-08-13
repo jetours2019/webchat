@@ -77,7 +77,7 @@ if (intent_recibido('conectar') || intent_recibido('conectar2')) {
             //       "subtitulo" => "Atendiendo $clients cliente$s.",
             //       "url" => "",
             // );
-            $asesor = "<span style='background-color:red'>$fullname ($clients)</span>";
+            $asesor = "$fullname ($clients)";
             array_push($tarjetas['botones'], $asesor);
       }
 
