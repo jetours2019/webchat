@@ -7,7 +7,7 @@ if ($_SESSION['logged']) {
     require_once "$level_file/db/conexion.php";
 
     $id = $_SESSION['id'];
-    $sql = "UPDATE usuarios SET online=false, clients=0 WHERE id=$id";
+    $sql = "UPDATE usuarios SET online=false WHERE id=$id";
     $act = $conexion->query($sql); 
 }
 session_destroy();
