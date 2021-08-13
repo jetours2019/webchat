@@ -24,7 +24,7 @@ function credenciales($usuario, $pass)
 {
     global $usuario_recibido;
     global $pass_recibido;
-    if (($usuario != $usuario_recibido) OR ($pass != $pass_recibido)) {
+    if (($usuario != $usuario_recibido) or ($pass != $pass_recibido)) {
         echo "Acceso no autorizado";
         die();
     }
@@ -237,7 +237,15 @@ function enviar_respuestas_rapidas($respuestas, $plataforma)
             "quickReplies": [ ';
     $str = "";
     foreach ($respuestas['botones'] as $boton) {
-        $str = $str . '"' . $boton . '",';
+        $strObj="
+            {
+                \"content_type\":\"text\",
+                \"title\":\"$boton\",
+                \"payload\":\"<POSTBACK_PAYLOAD>\",
+                \"img_url\":\"https://aliadostravel.com/webchat/assets/images/iconlogo.png\",
+            }
+        ";
+        $str = $str . '"' . $strObj . '",';
     }
     echo rtrim($str, ',');
     echo '
@@ -246,5 +254,4 @@ function enviar_respuestas_rapidas($respuestas, $plataforma)
           "platform": "' . $plataforma . '"
         }
       ] }' . PHP_EOL;
-
-  }
+}
