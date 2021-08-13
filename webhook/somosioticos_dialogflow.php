@@ -244,7 +244,7 @@ function enviar_respuestas_rapidas($respuestas, $plataforma)
                 "img_url":"https://aliadostravel.com/webchat/assets/images/iconlogo.png",
             }
         ';
-        $str = $str . '"' . $strObj . '",';
+        $str = $str . '"' . $boton . '",';
     }
     echo rtrim($str, ',');
     echo '
