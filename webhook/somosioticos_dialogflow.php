@@ -237,14 +237,14 @@ function enviar_respuestas_rapidas($respuestas, $plataforma)
             "quickReplies": [ ';
     $str = "";
     foreach ($respuestas['botones'] as $boton) {
-        $strObj="
+        $strObj='
             {
-                \"content_type\":\"text\",
-                \"title\":\"$boton\",
-                \"payload\":\"<POSTBACK_PAYLOAD>\",
-                \"img_url\":\"https://aliadostravel.com/webchat/assets/images/iconlogo.png\",
+                "content_type":"text",
+                "title":"$boton",
+                "payload":"<POSTBACK_PAYLOAD>",
+                "img_url":"https://aliadostravel.com/webchat/assets/images/iconlogo.png",
             }
-        ";
+        ';
         $str = $str . '"' . $strObj . '",';
     }
     echo rtrim($str, ',');
