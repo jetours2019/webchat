@@ -241,7 +241,6 @@ function enviar_respuestas_rapidas($respuestas, $plataforma)
             {
                 "content_type":"text",
                 "title":"$boton",
-                "payload":"<POSTBACK_PAYLOAD>",
                 "img_url":"https://aliadostravel.com/webchat/assets/images/iconlogo.png",
             }
         ';
