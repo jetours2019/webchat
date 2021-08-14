@@ -53,7 +53,7 @@ if (intent_recibido("disponibilidad")) {
 if (intent_recibido('conectar') || intent_recibido('conectar2')) {
 
       $hora = date('H');
-      if($hora >= 10 && $hora <= 18) {
+      if($hora <= 10 && $hora >= 18) {
             $mensaje = "El horario de atención es de 8am-6pm";
             enviar_texto($mensaje);
       }else{
