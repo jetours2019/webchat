@@ -1,5 +1,6 @@
 <?php
 //esto incluye la librería
+date_default_timezone_set("America/Bogota");
 include_once "somosioticos_dialogflow.php";
 //credenciales('empanadasbot','123456789');
 
@@ -51,44 +52,20 @@ if (intent_recibido("disponibilidad")) {
 
 if (intent_recibido('conectar') || intent_recibido('conectar2')) {
 
-      // me conecto a db
-      $mysqli = mysqli_connect("localhost", "jetours1_disponibilidad", "(!mEkkfrKuS9", "jetours1_webchat");
-
-      if (!$mysqli) {
-            echo "Error: No se pudo conectar a MySQL." . PHP_EOL;
-            die();
-      }
-
-      $query = "SELECT * FROM usuarios WHERE online=true AND username != 'admin'";
-      $consulta = mysqli_query($mysqli, $query) or die(mysqli_error($mysqli));
-      $existe = false;
-      // $mensaje = "Los siguientes asesores se encuentran en linea: \n";
-      $tarjetas = array(
-            "titulo" => "Los siguientes asesores se encuentran en linea:",
-            "botones" => array()
-      );
-      while ($registro = mysqli_fetch_array($consulta)) {
-            $existe = true;
-            $fullname = $registro['fullname'];
-            $clients = $registro['clients'];
-            $s = ($clients == 1) ? "" : "s";
-            // $tarjeta = array(
-            //       "titulo" => $fullname,
-            //       "subtitulo" => "Atendiendo $clients cliente$s.",
-            //       "url" => "",
-            // );
-            $asesor = "$fullname ($clients)";
-            array_push($tarjetas['botones'], $asesor);
-      }
-
-      if (!$existe) {
-            $mensaje = "No se encuentran asesores en linea";
+      $hora = date('H');
+      if($hora >= 10 && $hora <= 18) {
+            $mensaje = "El horario de atención es de 8am-6pm";
             enviar_texto($mensaje);
       }else{
-            enviar_respuestas_rapidas($tarjetas, "facebook");
+            $asesores = consulta_disponibilidad_asesores();
+
+            if (!$asesores['botones']) {
+                  $mensaje = "No se encuentran asesores en linea";
+                  enviar_texto($mensaje);
+            }else{
+                  enviar_respuestas_rapidas($asesores, "facebook");
+            }
       }
-
-
 }
 
 
@@ -218,7 +195,30 @@ function asignarNombreCiudad($codigo)
 
 
 
-function consulta_disponibilidad($origen, $destino, $mes)
+function consulta_disponibilidad_asesores()
 {
-      // return $cantidad;
+      // me conecto a db
+      $mysqli = mysqli_connect("localhost", "jetours1_disponibilidad", "(!mEkkfrKuS9", "jetours1_webchat");
+
+      if (!$mysqli) {
+            echo "Error: No se pudo conectar a MySQL." . PHP_EOL;
+            die();
+      }
+
+      $query = "SELECT * FROM usuarios WHERE online=true AND username != 'admin'";
+      $consulta = mysqli_query($mysqli, $query) or die(mysqli_error($mysqli));
+
+      $tarjetas = array(
+            "titulo" => "Los siguientes asesores se encuentran en linea:",
+            "botones" => array()
+      );
+
+      while ($registro = mysqli_fetch_array($consulta)) {
+            $fullname = $registro['fullname'];
+            $clients = $registro['clients'];
+            $asesor = "$fullname ($clients)";
+            array_push($tarjetas['botones'], $asesor);
+      }
+
+      return $tarjetas;
 }
