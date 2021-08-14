@@ -12,6 +12,8 @@ if (!$_SESSION['logged']) {
 
 $user = $_SESSION['user'];
 $name = $_SESSION['fullname'];
+$btnConexion = $_SESSION['conected'] ? '<a class="nav-link" href="./desconectar.php"><i class="fas fa-sign-out-alt pr-2"></i></i>Desconectar</a>' : '<a class="nav-link" href="./conectar.php"><i class="fas fa-sign-in-alt pr-2"></i>Conectar</a>';
+
 $creation = false;
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $creation = true;

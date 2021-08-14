@@ -30,7 +30,14 @@ while ($registro = mysqli_fetch_array($consulta)) {
     $tbody .= "<td>" . $registro['clients'] . "</td>";
 
     if ($user == "admin") {
-        $tbody .= "<td><a href='#' onclick='confirm_delete($(this))' data-fullname='$fullname' data-id='$id'><i class='erase fas fa-trash'></i></a></td>";
+        $iconConect = $registro['online'] ? "fa-sign-out-alt" : "fa-sign-in-alt";
+        $titleConect = $registro['online'] ? "Desconectar" : "Conectar";
+        $urlConect = $registro['online'] ? "./desconectar.php?asesor_id=" . $id : "./conectar.php?asesor_id=" . $id;
+        $tbody .= " <td>
+                        <a title='$titleConect' href='$urlConect'><i class='erase fas $iconConect'></i></a>
+                        <a title='Editar' href='#' onclick='alert(\"En desarrollo\")'><i class='erase fas fa-edit'></i></a>
+                        <a title='Eliminar' href='#' onclick='confirm_delete($(this))' data-fullname='$fullname' data-id='$id'><i class='erase fas fa-trash'></i></a>
+                    </td>";
     }
     $tbody .= "</tr>";
 }
@@ -170,7 +177,7 @@ while ($registro = mysqli_fetch_array($consulta)) {
                     cancelButtonText: 'Cancelar'
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        location.href = "./borrarUser.php?id="+id
+                        location.href = "./borrarUser.php?id=" + id
                     }
                 })
             }
