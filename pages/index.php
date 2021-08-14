@@ -35,7 +35,7 @@ while ($registro = mysqli_fetch_array($consulta)) {
         $urlConect = $registro['online'] ? "./desconectar.php?asesor_id=" . $id : "./conectar.php?asesor_id=" . $id;
         $tbody .= " <td>
                         <a title='$titleConect' href='$urlConect'><i class='erase fas $iconConect'></i></a>
-                        <a title='Editar' href='#' onclick='alert(\"En desarrollo\")'><i class='erase fas fa-edit'></i></a>
+                        <a title='Editar' href='./admin.php?asesor_id=$id')'><i class='erase fas fa-edit'></i></a>
                         <a title='Eliminar' href='#' onclick='confirm_delete($(this))' data-fullname='$fullname' data-id='$id'><i class='erase fas fa-trash'></i></a>
                     </td>";
     }

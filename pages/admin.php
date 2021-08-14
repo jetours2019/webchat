@@ -14,19 +14,48 @@ $user = $_SESSION['user'];
 $name = $_SESSION['fullname'];
 $btnConexion = $_SESSION['conected'] ? '<a class="nav-link" href="./desconectar.php"><i class="fas fa-sign-out-alt pr-2"></i></i>Desconectar</a>' : '<a class="nav-link" href="./conectar.php"><i class="fas fa-sign-in-alt pr-2"></i>Conectar</a>';
 
+$inputId = $valueUsername =  $valueTag = $valueFullname = "";
+$valuePassword = "required";
+if (array_key_exists('asesor_id', $_GET) && $_GET['asesor_id'] != '') {
+
+    $id =  $_GET['asesor_id'];
+    $inputId = "<input hidden value='$id' name='id'></input>";
+    $query = "SELECT * 
+          FROM usuarios 
+          WHERE id=$id";
+
+    $consulta = mysqli_query($conexion, $query) or die(mysqli_error($conexion));
+    $registro = mysqli_fetch_array($consulta);
+    $valuePassword = "";
+    $valueUsername = $registro['username'];
+    $valueTag = $registro['tag'];
+    $valueFullname = $registro['fullname'];
+    $accionTitle = "Edición";
+} else {
+    $accionTitle = "Creación";
+}
+
 $creation = false;
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $creation = true;
     $username = $_POST['username'];
     $fullname = $_POST['fullname'];
-    $password = md5($_POST['password']);
     $tag = $_POST['tag'];
 
-    $query = "INSERT INTO `usuarios` (`username`, `password`, `fullname`, `tag`) VALUES
-    ('$username', '$password', '$fullname', '$tag');";
+    if (array_key_exists('id', $_POST)) {
+        $id = $_POST['id'];
+        $password = (array_key_exists('password', $_POST) && $_POST['password']!="") ? "password='".md5($_POST['password'])."', " : "";
+        $query = "UPDATE usuarios SET username='$username', fullname='$fullname', $password tag='$tag' WHERE id=$id";
+        $accion = "editado";
+    } else {
+        $password = md5($_POST['password']);
+        $query = "INSERT INTO `usuarios` (`username`, `password`, `fullname`, `tag`) VALUES
+                ('$username', '$password', '$fullname', '$tag');";
+        $accion = "creado";
+    }
     $act = $conexion->query($query);
 
-    $mensaje = "<div class='row row-content'> Usuario '$fullname' creado correctamente.";
+    $mensaje = "<div class='row row-content'> Usuario '$fullname' $accion correctamente.";
 }
 ?>
 
@@ -104,22 +133,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <div class="row pt-5">
                 <div class="col-md-4 offset-md-4">
                     <h4>
-                        Creación de Usuario
+                        <?php echo $accionTitle; ?> de Usuario
                     </h4>
                 </div>
             </div>
             <form class="needs-validation" novalidate method="POST">
+                <?php echo $inputId; ?>
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="username">Nombre de usuario</label>
-                            <input required type="text" class="form-control" id="username" name="username" placeholder="Username">
+                            <input value="<?php echo $valueUsername; ?>" required type="text" class="form-control" id="username" name="username" placeholder="Username">
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="password">Contraseña</label>
-                            <input required type="password" class="form-control" id="password" name="password" placeholder="Password">
+                            <input <?php echo $valuePassword; ?> type="password" class="form-control" id="password" name="password" placeholder="Password">
                         </div>
                     </div>
                 </div>
@@ -127,13 +157,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="fullname">Nombre Completo</label>
-                            <input required type="text" class="form-control" id="fullname" name="fullname" placeholder="Nombre Completo">
+                            <input value="<?php echo $valueFullname; ?>" required type="text" class="form-control" id="fullname" name="fullname" placeholder="Nombre Completo">
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="tag">TAG de Respond</label>
-                            <input required type="text" class="form-control" id="tag" name="tag" placeholder="TAG">
+                            <input value="<?php echo $valueTag; ?>" required type="text" class="form-control" id="tag" name="tag" placeholder="TAG">
                         </div>
                     </div>
                 </div>
