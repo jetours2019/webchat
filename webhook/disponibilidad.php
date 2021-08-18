@@ -27,7 +27,6 @@ if (intent_recibido("disponibilidad")) {
       $registro = mysqli_fetch_array($consulta);
       $existe = false;
       while ($registro = mysqli_fetch_array($consulta)) {
-            $existe = true;
             $desde1 = $registro['desde1'];
             $hasta1 = $registro['hasta1'];
             $libre = $registro['libre'];
@@ -36,6 +35,7 @@ if (intent_recibido("disponibilidad")) {
             $aero = $registro['aerolineas1'];
             $amo = $registro['ano'];
             if ($libre > 0) {
+                  $existe = true;
                   $mensaje .= "Salida del $dia - $dia2 ($aero) | Sillas($libre)  \n ";
             }
       }
