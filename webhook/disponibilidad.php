@@ -36,7 +36,7 @@ if (intent_recibido("disponibilidad")) {
             $aero = $registro['aerolineas1'];
             $amo = $registro['ano'];
             if ($libre > 0) {
-                  $mensaje .= "salida del $dia - $dia2 ($aero) | Sillas($libre)  \n ";
+                  $mensaje .= "Salida del $dia - $dia2 ($aero) | Sillas($libre)  \n ";
             }
       }
 
