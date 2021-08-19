@@ -63,7 +63,8 @@ if (intent_recibido('conectar') || intent_recibido('conectar2')) {
                   $mensaje = "No se encuentran asesores en linea";
                   enviar_texto($mensaje);
             }else{
-                  enviar_respuestas_rapidas($asesores, "facebook");
+                  $plataforma = origen() == "INDETERMINADO" ? "whatsapp" : "facebook";
+                  enviar_respuestas_rapidas($asesores, $plataforma);
             }
       }
 }
