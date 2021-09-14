@@ -1,6 +1,8 @@
 <?php
 //esto incluye la librería
 include_once "somosioticos_dialogflow.php";
+date_default_timezone_set("America/Bogota");
+
 //credenciales('empanadasbot','123456789');
 
 
@@ -50,7 +52,6 @@ if (intent_recibido("disponibilidad")) {
 
 
 if (intent_recibido('conectar') || intent_recibido('conectar2')) {
-      date_default_timezone_set("America/Bogota");
 
       $hora = date('H');
       if($hora < 8 || $hora >= 18) {
