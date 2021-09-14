@@ -1,8 +1,6 @@
 <?php
 //esto incluye la librería
 include_once "somosioticos_dialogflow.php";
-date_default_timezone_set("America/Bogota");
-debug();
 //credenciales('empanadasbot','123456789');
 
 
@@ -14,19 +12,14 @@ if (intent_recibido("disponibilidad")) {
             echo "Error: No se pudo conectar a MySQL." . PHP_EOL;
             die();
       }
+      date_default_timezone_set("America/Argentina/Buenos_Aires");
+
       $origen = obtener_variables()['origen'];
       $destino = obtener_variables()['destino'];
       $fecha = obtener_variables()['mes'];
       $fecha_form = formatDate($fecha);
       $mes = $fecha_form['mes'];
       $ano = $fecha_form['anio'];
-
-      $input = array(
-            "fecha_llega" => $fecha,
-            "fecha_form" => $fecha_form,
-      );
-      $json_string = json_encode($input, JSON_PRETTY_PRINT);
-      file_put_contents('jsonDates.js', $json_string);
 
       $ciudad1 = asignarNombreCiudad($origen);
       $ciudad2 = asignarNombreCiudad($destino);
@@ -59,6 +52,7 @@ if (intent_recibido("disponibilidad")) {
 
 
 if (intent_recibido('conectar') || intent_recibido('conectar2')) {
+      date_default_timezone_set("America/Bogota");
 
       $hora = date('H');
       if($hora < 8 || $hora >= 18) {
