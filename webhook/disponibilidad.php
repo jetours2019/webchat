@@ -2,7 +2,7 @@
 //esto incluye la librería
 include_once "somosioticos_dialogflow.php";
 date_default_timezone_set("America/Bogota");
-
+debug();
 //credenciales('empanadasbot','123456789');
 
 
