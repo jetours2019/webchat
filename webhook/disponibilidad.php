@@ -21,6 +21,13 @@ if (intent_recibido("disponibilidad")) {
       $mes = $fecha_form['mes'];
       $ano = $fecha_form['anio'];
 
+      $input = array(
+            "fecha_llega" => $fecha,
+            "fecha_form" => $fecha_form,
+      );
+      $json_string = json_encode($input, JSON_PRETTY_PRINT);
+      file_put_contents('jsonDates.js', $json_string);
+
       $ciudad1 = asignarNombreCiudad($origen);
       $ciudad2 = asignarNombreCiudad($destino);
 
