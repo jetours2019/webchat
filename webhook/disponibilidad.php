@@ -55,17 +55,24 @@ if (intent_recibido('conectar') || intent_recibido('conectar2')) {
       date_default_timezone_set("America/Bogota");
 
       $hora = date('H');
-      if($hora < 8 || $hora >= 18) {
+      $dia = date('w');
+      $mins = date('i');
+
+      if (
+            ($dia == 0) || //domingo
+            (($dia == 6) && (($hora < 8) || ($hora == 8 && $mins < 30) || ($hora > 13) || ($hora == 13 && $mins > 30))) || //sabado
+            (($dia != 0 && $dia != 6) && ( $hora < 8 || $hora >= 18 ))) //entre semana
+            { 
             $mensaje = "Gracias por su mensaje.
             Nuestro horario de atención es de lunes a viernes de 8:00am a 6:00pm | Sábados de 8:30am a 1:30pm";
             enviar_texto($mensaje);
-      }else{
+      } else {
             $asesores = consulta_disponibilidad_asesores();
 
             if (!$asesores['botones']) {
                   $mensaje = "No se encuentran asesores en linea";
                   enviar_texto($mensaje);
-            }else{
+            } else {
                   enviar_respuestas_rapidas($asesores, "facebook");
             }
       }
