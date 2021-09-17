@@ -54,7 +54,8 @@ if (intent_recibido('conectar') || intent_recibido('conectar2')) {
 
       $hora = date('H');
       if($hora < 8 || $hora >= 18) {
-            $mensaje = "El horario de atención es de 8am-6pm";
+            $mensaje = "Gracias por su mensaje.
+            Nuestro horario de atención es de lunes a viernes de 8:00am a 6:00pm | Sábados de 8:30am a 1:30pm";
             enviar_texto($mensaje);
       }else{
             $asesores = consulta_disponibilidad_asesores();
@@ -209,7 +210,8 @@ function consulta_disponibilidad_asesores()
       $consulta = mysqli_query($mysqli, $query) or die(mysqli_error($mysqli));
 
       $tarjetas = array(
-            "titulo" => "Los siguientes asesores se encuentran en linea:",
+            "titulo" => "Elige uno de los asesores a continuación:
+            (El número seguido del nombre hace relación al nivel de ocupación del asesor)",
             "botones" => array()
       );
 
