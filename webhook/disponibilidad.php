@@ -12,6 +12,8 @@ if (intent_recibido("disponibilidad")) {
             echo "Error: No se pudo conectar a MySQL." . PHP_EOL;
             die();
       }
+      date_default_timezone_set("America/Argentina/Buenos_Aires");
+
       $origen = obtener_variables()['origen'];
       $destino = obtener_variables()['destino'];
       $fecha = obtener_variables()['mes'];
