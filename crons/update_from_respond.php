@@ -34,7 +34,7 @@ foreach ($tags as $id=>$tag) {
     curl_setopt($ch2, CURLOPT_HTTPHEADER, $headr2);
     curl_setopt($ch2, CURLOPT_RETURNTRANSFER, true);
 
-    $response = json_decode(curl_exec($ch));
+    $response = json_decode(curl_exec($ch2));
     $clients += countContacts($response, $accesstoken2);
 
     $sql = "UPDATE usuarios SET clients=$clients WHERE id=$id";
