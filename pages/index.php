@@ -26,7 +26,7 @@ while ($registro = mysqli_fetch_array($consulta)) {
     $tbody .= "<td>" . $registro['username'] . "</td>";
     $tbody .= "<td>" . $fullname . "</td>";
     $tbody .= "<td>" . "<i class='pl-3 fas fa-circle $online'></i>" . "</td>";
-    $tbody .= "<td>" . $registro['tag'] . "</td>";
+    $tbody .= "<td><a href='https://aliadostravel.com/?ref=". $registro['tag'] ."#webchat_widget' target='-incognito'>" . $registro['tag'] . "</a></td>";
     $tbody .= "<td>" . $registro['clients'] . "</td>";
 
     if ($user == "admin") {
