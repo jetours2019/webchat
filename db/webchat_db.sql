@@ -38,6 +38,7 @@ CREATE TABLE `usuarios` (
   `username` varchar(50) NOT NULL,
   `password` varchar(50) NOT NULL,
   `fullname` varchar(70) NOT NULL,
+  `email` varchar(150) NOT NULL,
   `online` boolean NOT NULL DEFAULT FALSE,
   `tag` varchar(50) NOT NULL,
   `clients` int(11) NOT NULL DEFAULT 0
