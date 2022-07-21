@@ -10,10 +10,12 @@ $user = $_SESSION['user'];
 $name = $_SESSION['fullname'];
 $btnConexion = $_SESSION['conected'] ? '<a class="nav-link" href="./desconectar.php"><i class="fas fa-sign-out-alt pr-2"></i></i>Desconectar</a>' : '<a class="nav-link" href="./conectar.php"><i class="fas fa-sign-in-alt pr-2"></i>Conectar</a>';
 
-$query = "SELECT * 
-          FROM usuarios 
-          WHERE username != 'admin'
-          order by online desc";
+$query = "SELECT u.id, u.username, u.fullname, u.online, u.tag, u.clients, AVG(c.calificacion) as calificacion, COUNT(c.id) as cantidad_calificaciones
+        FROM usuarios u
+        LEFT JOIN calificaciones c on u.id = c.id_usuario
+        WHERE username != 'admin'
+        GROUP BY u.id, u.username, u.fullname, u.online, u.tag, u.clients
+        order by online desc, u.tag ";
 
 $consulta = mysqli_query($conexion, $query) or die(mysqli_error($conexion));
 $tbody = "";
@@ -26,10 +28,13 @@ while ($registro = mysqli_fetch_array($consulta)) {
     $tbody .= "<td>" . $registro['username'] . "</td>";
     $tbody .= "<td>" . $fullname . "</td>";
     $tbody .= "<td>" . "<i class='pl-3 fas fa-circle $online'></i>" . "</td>";
-    $tbody .= "<td><a href='https://aliadostravel.com/?ref=". $registro['tag'] ."#webchat_widget' target='-incognito'>" . $registro['tag'] . "</a></td>";
+    $tbody .= "<td><a href='https://aliadostravel.com/?ref=" . $registro['tag'] . "#webchat_widget' target='-incognito'>" . $registro['tag'] . "</a></td>";
     $tbody .= "<td>" . $registro['clients'] . "</td>";
+    $tbody .= "<td>" . round($registro['calificacion'], 2) . "</td>";
 
     if ($user == "admin") {
+        $tbody .= "<td><a href='./calificaciones.php?id=$id'>" . $registro['cantidad_calificaciones'] . "</a></td>";
+
         $iconConect = $registro['online'] ? "fa-sign-out-alt" : "fa-sign-in-alt";
         $titleConect = $registro['online'] ? "Desconectar" : "Conectar";
         $urlConect = $registro['online'] ? "./desconectar.php?asesor_id=" . $id : "./conectar.php?asesor_id=" . $id;
@@ -101,7 +106,9 @@ while ($registro = mysqli_fetch_array($consulta)) {
             <div class="collapse navbar-collapse" id="Navbar">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item active"><a class="nav-link" href="#"><?php echo $name; ?></a></li>
-                    <li class="nav-item"><?php echo $btnConexion; ?></li>
+                    <?php if ($user != "admin") { ?>
+                        <li class="nav-item"><?php echo $btnConexion; ?></li>
+                    <?php } ?>
                 </ul>
                 <span class="navbar-text">
                     <!-- <a data-toggle="modal" data-target="#loginModal"> -->
@@ -143,7 +150,11 @@ while ($registro = mysqli_fetch_array($consulta)) {
                             <th>
                                 Clientes atendiendo
                             </th>
+                            <th>
+                                Promedio Calificaciones
+                            </th>
                             <?php if ($user == "admin") { ?>
+                                <th># Calificaciones</th>
                                 <th>
                                     Acciones
                                 </th>

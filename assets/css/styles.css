@@ -1,0 +1,117 @@
+.centrar {
+    display: block;
+    margin: auto;
+    width: 130px;
+}
+
+#form p {
+    text-align: center;
+}
+
+#form label {
+    font-size: 20px;
+}
+
+input[type="radio"] {
+    display: none;
+}
+
+label {
+    color: grey;
+}
+
+.clasificacion {
+    direction: rtl;
+    unicode-bidi: bidi-override;
+}
+
+label:hover,
+label:hover~label {
+    color: orange;
+}
+
+input[type="radio"]:checked~label {
+    color: orange;
+}
+
+
+
+body {
+    background: rgb(255 255 255);
+    background: radial-gradient(circle, rgb(247 244 255) 0%, rgb(207 205 205) 100%);
+    min-height: 100vh;
+    max-height: 100vh;
+    padding: 0;
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+}
+
+form {
+    max-width: 345px;
+    background: #0a024c;
+    border-radius: 23px;
+    padding: 15px;
+    width: 100%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+h2 {
+    text-align: center;
+    color: white;
+    font-weight: 500;
+    font-size: 1.3rem;
+}
+
+h2 b {
+    color: #f0a500;
+}
+
+p.clasificacion {
+    width: fit-content;
+    margin: auto;
+    font-size: 3rem;
+}
+
+p.comentarios label {
+    display: block;
+    font-size: 1.2rem;
+    text-align: center;
+}
+
+p.comentarios textarea {
+    width: 100%;
+    min-height: 53px;
+    padding: 9px;
+    font-size: 16px;
+    box-sizing: border-box;
+    border-radius: 6px;
+}
+
+input[type="submit"] {
+    width: 100%;
+    padding: 14px;
+    background: #f0a500;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 1rem;
+}
+
+input[type="submit"]:hover {
+    background: #f3b323;
+}
+
+img {
+    display: block;
+    margin: auto;
+}
+
+.noHover{
+    background: #e0c480 !important;
+    pointer-events: none;
+}

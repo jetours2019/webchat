@@ -65,3 +65,37 @@ COMMIT;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 INSERT INTO `usuarios` (`username`, `password`, `fullname`, `tag`) VALUES
 ('admin', '80252793ec9cbc5184da984e746cd9f1', 'Camilo Cruz', '0');
+
+
+----- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `calificaciones`
+--
+
+DROP TABLE IF EXISTS `calificaciones`;
+
+CREATE TABLE `calificaciones` (
+  `id` int(10) NOT NULL,
+  `id_usuario` int(11) NOT NULL, 
+  `calificacion` int(11) NOT NULL, 
+  `comentario` varchar(500),
+  `date` varchar(50) NOT NULL,
+  FOREIGN KEY (id_usuario) REFERENCES usuarios(id)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+
+-- Indices de la tabla `calijjficaciones`
+--
+ALTER TABLE `calificaciones`
+  ADD PRIMARY KEY (`id`);
+
+
+--
+-- AUTO_INCREMENT de las tablas volcadas
+--
+-- AUTO_INCREMENT de la tabla `calificaciones`
+--
+ALTER TABLE `calificaciones`
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=0;
+COMMIT;
