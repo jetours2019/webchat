@@ -41,6 +41,7 @@ CREATE TABLE `usuarios` (
   `email` varchar(150) NOT NULL,
   `online` boolean NOT NULL DEFAULT FALSE,
   `tag` varchar(50) NOT NULL,
+  `id_respond` varchar(50) NOT NULL,
   `clients` int(11) NOT NULL DEFAULT 0
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 

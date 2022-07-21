@@ -1,14 +1,14 @@
 <?php
 
 
-array_key_exists('tag', $_GET) or die('Error en los parametros');
+array_key_exists('ces', $_GET) or die('Error en los parametros');
 array_key_exists('da', $_GET) or die('Error en los parametros');
 
-$tag = $_GET['tag'];
+$id_respond = $_GET['ces'];
 $da = $_GET['da'];
 require_once "../db/conexion.php";
 
-$query_asesor = "SELECT * FROM usuarios WHERE tag='" . $_GET['tag'] . "'";
+$query_asesor = "SELECT * FROM usuarios WHERE id_respond='" . $id_respond . "'";
 $consulta = mysqli_query($conexion, $query_asesor) or die(mysqli_error($conexion));
 $registro = mysqli_fetch_array($consulta);
 $saved = 0;
