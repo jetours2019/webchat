@@ -2,7 +2,7 @@
 
 session_start();
 
-if (!array_key_exists('tag', $_POST) || 
+if (!array_key_exists('ces', $_POST) || 
     !array_key_exists('da', $_POST) || 
     !array_key_exists('id_asesor', $_POST) ||
     !array_key_exists('comentario', $_POST) ||
@@ -29,4 +29,4 @@ if(!$registro){
 }
 
 $_SESSION['saved'] = true;
-header("location: index.php?tag=".$_POST['tag']."&da=".$_POST['da']);
+header("location: index.php?ces=".$_POST['ces']."&da=".$_POST['da']);

@@ -73,7 +73,7 @@ if (!$registro) {
                 <label>Comentarios Adicionales</label>
                 <textarea name="comentario"></textarea>
             </p>
-            <input type="hidden" name="tag" value="<?php echo $tag; ?>">
+            <input type="hidden" name="ces" value="<?php echo $id_respond; ?>">
             <input type="hidden" name="da" value="<?php echo $da; ?>">
             <input type="hidden" name="id_asesor" value="<?php echo $id_asesor; ?>">
 
