@@ -1,5 +1,13 @@
 <?php
 
+function format_date($date_str)
+{
+    $fecha = explode("-", substr($date_str, 0, 10));
+    $fecha = $fecha[2] . "/" . $fecha[1] . "/" . $fecha[0];
+    $hora = substr($date_str,10, 19);
+    return $fecha . " " . $hora;
+}
+
 array_key_exists('id', $_GET) or die('Error en los parametros');
 
 $asesor_id = $_GET['id'];
@@ -43,7 +51,7 @@ while ($registro = mysqli_fetch_array($consulta)) {
     $tbody .= "<tr>";
     $tbody .= "<td>" . $id . "</td>";
     $tbody .= "<td>" . $calificacion . "</td>";
-    $tbody .= "<td>" . $date . "</td>";
+    $tbody .= "<td>" . format_date($date). "</td>";
     $tbody .= "<td>" . $comentario . "</td>";
     $tbody .= " <td>
     <a title='Eliminar' href='#' onclick='confirm_delete($(this))' data-id='$id' data-asesor_id='$asesor_id'><i class='erase fas fa-trash'></i></a>
@@ -130,7 +138,7 @@ while ($registro = mysqli_fetch_array($consulta)) {
                     <?php echo $cantidad_calificaciones; ?>
 
                     <br>
-                        Promedio:
+                    Promedio:
                     <?php echo $promedio; ?>
                 </h5>
             </div>
