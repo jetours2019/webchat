@@ -14,7 +14,7 @@ $user = $_SESSION['user'];
 $name = $_SESSION['fullname'];
 $btnConexion = $_SESSION['conected'] ? '<a class="nav-link" href="./desconectar.php"><i class="fas fa-sign-out-alt pr-2"></i></i>Desconectar</a>' : '<a class="nav-link" href="./conectar.php"><i class="fas fa-sign-in-alt pr-2"></i>Conectar</a>';
 
-$inputId = $valueUsername =  $valueTag = $valueFullname = "";
+$inputId = $valueUsername =  $valueTag = $valueIdRespond = $valueFullname = "";
 $valuePassword = "required";
 if (array_key_exists('asesor_id', $_GET) && $_GET['asesor_id'] != '') {
 
@@ -29,7 +29,9 @@ if (array_key_exists('asesor_id', $_GET) && $_GET['asesor_id'] != '') {
     $valuePassword = "";
     $valueUsername = $registro['username'];
     $valueTag = $registro['tag'];
+    $valueIdRespond = $registro['id_respond'];
     $valueFullname = $registro['fullname'];
+    $valueEmail = $registro['email'];
     $accionTitle = "Edición";
 } else {
     $accionTitle = "Creación";
@@ -41,16 +43,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = $_POST['username'];
     $fullname = $_POST['fullname'];
     $tag = $_POST['tag'];
+    $email = $_POST['email'];
+    $id_respond = $_POST['id_respond'];
 
     if (array_key_exists('id', $_POST)) {
         $id = $_POST['id'];
-        $password = (array_key_exists('password', $_POST) && $_POST['password']!="") ? "password='".md5($_POST['password'])."', " : "";
-        $query = "UPDATE usuarios SET username='$username', fullname='$fullname', $password tag='$tag' WHERE id=$id";
+        $password = (array_key_exists('password', $_POST) && $_POST['password'] != "") ? "password='" . md5($_POST['password']) . "', " : "";
+        $query = "UPDATE usuarios SET username='$username', fullname='$fullname', $password tag='$tag', id_respond='$id_respond', email='$email' WHERE id=$id";
         $accion = "editado";
     } else {
         $password = md5($_POST['password']);
-        $query = "INSERT INTO `usuarios` (`username`, `password`, `fullname`, `tag`) VALUES
-                ('$username', '$password', '$fullname', '$tag');";
+        $query = "INSERT INTO `usuarios` (`username`, `password`, `fullname`, `tag`, `id_respond`, `email`) VALUES
+                ('$username', '$password', '$fullname', '$tag', '$id_respond', '$email');";
         $accion = "creado";
     }
     $act = $conexion->query($query);
@@ -116,7 +120,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <div class="collapse navbar-collapse" id="Navbar">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item active"><a class="nav-link" href="#"><?php echo $name; ?></a></li>
-                    <li class="nav-item"><?php echo $btnConexion; ?></li>
                 </ul>
                 <span class="navbar-text">
                     <!-- <a data-toggle="modal" data-target="#loginModal"> -->
@@ -164,6 +167,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <div class="form-group">
                             <label for="tag">TAG de Respond</label>
                             <input value="<?php echo $valueTag; ?>" required type="text" class="form-control" id="tag" name="tag" placeholder="TAG">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="tag">ID de Respond</label>
+                            <input value="<?php echo $valueIdRespond; ?>" required type="text" class="form-control" id="id_respond" name="id_respond" placeholder="ID Respond">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="tag">Email</label>
+                            <input value="<?php echo $valueEmail; ?>" required type="text" class="form-control" id="email" name="email" placeholder="Email">
                         </div>
                     </div>
                 </div>
